@@ -13,33 +13,70 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        # get an id, given by input, for the vertex and store in a set
+        self.vertices[vertex_id] = set() # key is ???
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        # if both verts you're trying to link exist
+        if v1 in self.vertices and v2 in self.vertices:
+            # add an edge between them
+            self.vertices[v1].add(v2)
+        else:
+            # if not, throw error
+            raise IndexError("nonexistent vertex")
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id]
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Queue()
+        seen = set()
+
+        q.enqueue(starting_vertex)
+
+        # while q is not empty
+        while q.size() > 0:
+            v = q.dequeue()
+
+            if v not in seen:
+                print(v)
+
+                seen.add(v)
+
+                for neighbor in self.get_neighbors(v):
+                    q.enqueue(neighbor)
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Stack()
+        seen = set()
+
+        q.push(starting_vertex)
+
+        # while q is not empty
+        while q.size() > 0:
+            v = q.pop()
+
+            if v not in seen:
+                print(v)
+
+                seen.add(v)
+
+                for neighbor in self.get_neighbors(v):
+                    q.push(neighbor)
 
     def dft_recursive(self, starting_vertex):
         """
