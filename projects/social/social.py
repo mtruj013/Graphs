@@ -1,4 +1,18 @@
 import random, math
+
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -70,8 +84,31 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
-        visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        # need to keep track of path
+        # need to know shortest path
+        # use bfs 
+        # need cache
+        # need way to get neighbors
+        # for each entry in visited: key=user_id, value=shortest path
+
+        visited = {}  # Note that this is a dictionary, not a set
+
+        # for bfs
+        q = Queue()
+        q.enqueue([user_id])  # add starting node to the queue
+        jump_count = 0 
+
+        # while queue is not empty
+        while q.size() > 0:
+            
+            path = q.dequeue() # dequeue the first path
+            print(f"path: {path}")
+            last_node = path[-1] # grab the last node from path
+            if last_node not in visited:
+                pass
+
         return visited
 
 

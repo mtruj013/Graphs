@@ -1,7 +1,8 @@
 from room import Room
 from player import Player
 from world import World
-
+from util import Stack, Queue
+from adv_graph import Graph
 import random
 from ast import literal_eval
 
@@ -28,6 +29,50 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
+
+def make_graph(graph):
+
+    s = Stack() # stack for dft
+    path = [] # returned path
+    visited = set() # visited rooms
+    s.push(0) # add first room to stack
+
+    while len(visited) < len(graph):
+        cur_id = s.tail() # get room id for room we're looking at
+        visited.add(cur_id) # mark as visited
+
+        cur_graph = graph[cur_id] # get info from room
+
+        room_direction = cur_graph[1]
+
+        unseen = [] # cache to keep track of unvisited rooms
+
+        for direction, room_id in room_direction.items():
+            if room_id not in visited:
+                unseen.append(room_id) # add it to unseen cache
+
+        # if dead end, walk back to nearest unexplored path
+        if len(unseen) > 0:
+            next_room = unseen[0]
+            s.push(next_room)
+        else:
+            s.pop()
+            next_room = s.tail()
+
+        for direction, next_id in room_direction.items():
+            if next_id == next_room:
+                path.append(direction)
+    return path
+
+traversal_path = make_graph(room_graph)
+
+# if dead-end (room with no unexplored path), walk back to nearest room with unexplored paths
+    # find shortest path to unexplored room using bfs
+    # will need a queue
+    # target will be a value of '?'
+    # if exit has beenm explored, it can be put in the queue
+    # bfs will return the path as a list or room IDs, need to convert this to a list of directions before adding it to traversal path
+
 
 
 
